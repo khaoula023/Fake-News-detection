@@ -3,6 +3,7 @@ import sys
 import numpy as np
 import pandas as pd
 import dill
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 from src.exception import CustomException
 
 
@@ -40,3 +41,22 @@ def balance(data):
         return df
     except Exception as e:
         raise CustomException(e, sys)
+    
+    
+def evaluate_model(true, predicted):
+    # Accuracy
+    accuracy = accuracy_score(true, predicted)
+    
+    # Precision 
+    precision = precision_score(true, predicted, average='weighted')
+    
+    # Recall 
+    recall = recall_score(true, predicted, average='weighted')
+    
+    # F1-Score 
+    f1 = f1_score(true, predicted, average='weighted')
+    
+    # Confusion Matrix
+    cm = confusion_matrix(true, predicted)
+    
+    return accuracy, precision, recall, f1, cm

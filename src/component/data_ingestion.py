@@ -8,6 +8,7 @@ from dataclasses import dataclass
 
 from src.utils import balance
 from src.component.data_transformation import DataTransformation
+from src.component.model_trainer import ModelTrainer
 
 @dataclass
 class DataIngestionConfig:
@@ -47,3 +48,7 @@ if __name__ == "__main__":
     
     data_transformation = DataTransformation()
     train_arr, test_arr, _ = data_transformation.transform(train_data, test_data)
+    
+    model = ModelTrainer()
+    f1_score = model.train(train_arr, test_arr)
+    print(f'F1 score = {f1_score}')
