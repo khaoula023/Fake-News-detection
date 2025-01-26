@@ -23,19 +23,20 @@ class PredictPipeline:
             
             logging.info('Make Predictions')
             prediction = model.predict(data_scaled)
-            return prediction 
+            label =  'Fake' if prediction[0] > 0.5 else 'Real'
+            return label
             
         except Exception as e:
             raise CustomException(e, sys)
         
         
 class CustomData:
-    def __init__(self, text: str):
-        self.text = text
+    def __init__(self, news: str):
+        self.news = news
         
     def get_data_as_data_frame(self):
         try:
-            custom_data_input_dict = { "text": [self.text]}
+            custom_data_input_dict = { "text": [self.news]}
             return pd.DataFrame(custom_data_input_dict)
         except Exception as e:
             raise CustomData(e, sys)
@@ -45,4 +46,4 @@ if __name__ == '__main__':
     text = data.get_data_as_data_frame()
     obj = PredictPipeline()
     label = obj.predict(text)
-    print(f'The price is: {label}')
+    print(f'The news is: {label}')
