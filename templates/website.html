@@ -5,29 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="static/style.css" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Playfair+Display:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <title>Fake News Detector</title>
   </head>
   <body>
-    <h1>Fake News Detector</h1>
-    <form action="/predict" method="POST">
-      <label class="form-label" for="News">News</label>
-      <input
-        id="News"
-        class="form-control"
-        style="width: 800px; padding: 20px; font-size: 18px"
-        type="text"
-        name="News"
-        placeholder="Enter The News"
-        value="{{ request.form.get('News', '') }}"
-        required
-      />
-      <div class="mb-3">
-        <button class="btn" type="submit">Detect The News</button>
-      </div>
-    </form>
-    <h2>{% if results %}This News is {{ results }} {% endif %}</h2>
+    <div class="content-wrapper">
+      <h1>Fake News Detector</h1>
+      <form action="/predict" method="POST">
+        <label class="form-label" for="News">News</label>
+        <input
+          id="News"
+          class="form-control"
+          type="text"
+          name="News"
+          placeholder="Enter The News"
+          value="{{ request.form.get('News', '') }}"
+          required
+        />
+        <div class="mb-3">
+          <button class="btn" type="submit">Verify</button>
+        </div>
+      </form>
+      <h2>{% if results %}This News is {{ results }} {% endif %}</h2>
+    </div>
   </body>
 </html>
