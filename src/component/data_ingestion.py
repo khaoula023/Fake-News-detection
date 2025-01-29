@@ -3,10 +3,11 @@ import sys
 from src.exception import CustomException
 from src.logger import logging
 import pandas as pd
+import spacy
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
-from src.utils import balance
+from src.utils import balance, lemmatize_text
 from src.component.data_transformation import DataTransformation
 from src.component.model_trainer import ModelTrainer
 
@@ -28,8 +29,13 @@ class DataIngestion:
             
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok= True)
             df.to_csv(self.ingestion_config.raw_data_path, index=False, header=True)
+            
             logging.info('Reducing the size of the majority class in the dataset')
             df = balance(df)
+            
+            logging.info('Remove stopwords and lemmatization')
+            df['text'] = df['text'].apply(lemmatize_text)
+            
             logging.info('Train Test split initiated')
             train, test = train_test_split(df,test_size=0.2, random_state=42)
             train.to_csv(self.ingestion_config.train_data_path, index=False, header=True)

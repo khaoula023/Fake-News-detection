@@ -2,6 +2,7 @@ import os
 import sys
 import numpy as np
 import pandas as pd
+import spacy
 import dill
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 from src.exception import CustomException
@@ -39,6 +40,15 @@ def balance(data):
         # Shuffle the dataset (optional, but recommended for randomization)
         df = df_balanced.sample(frac=1, random_state=42).reset_index(drop=True)
         return df
+    except Exception as e:
+        raise CustomException(e, sys)
+    
+def lemmatize_text(nlp,text):
+    try:
+        # Load SpaCy model
+        nlp = spacy.load("en_core_web_sm")
+        doc = nlp(text)
+        return " ".join([token.lemma_ for token in doc if not token.is_stop and token.is_alpha])
     except Exception as e:
         raise CustomException(e, sys)
     

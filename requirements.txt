@@ -1,7 +1,9 @@
 numpy
 pandas
 matplotlib
+spacy
 scikit-learn
 dill
 flask
+fastparquet
 #-e .
